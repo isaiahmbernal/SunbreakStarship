@@ -1,4 +1,5 @@
 class Character {
+
   constructor(xPos, yPos, width, height, health, speed, fireIntervalTime, assetLocation) {
     this.xPos = xPos;
     this.yPos = yPos;
@@ -42,7 +43,7 @@ class Starship extends Character {
     // D
     if (keyIsDown(68) && this.xPos < width - 80) this.xPos += this.speed;
     // W
-    if (keyIsDown(87) && this.yPos > 140 + this.height / 2) this.yPos -= this.speed;
+    if (keyIsDown(87) && this.yPos > 220) this.yPos -= this.speed;
     // S
     if (keyIsDown(83) && this.yPos < height - 80) this.yPos += this.speed;
   }
@@ -119,17 +120,24 @@ class Starship extends Character {
 
 class Enemy extends Character {
 
-  constructor({xPos, yPos, width, height, health, speed, fireIntervalTime, direction, assetLocation}) {
+  constructor({xPos, yPos, width, height, health, speed, projectileSpeed, fireIntervalTime, direction, assetLocation, enemyMap}) {
     super(xPos, yPos, width, height, health, speed, fireIntervalTime, assetLocation);
+    this.projectileSpeed = projectileSpeed;
     this.direction = direction;
+    this.enemyMap = enemyMap;
     this.fireTimeout;
     this.pointsUponDeath;
+    this.isInvincible = true;
     this.id = Math.floor(Math.random() * 1000);
-    while (enemies.has(this.id)) {
+    while (this.enemyMap.has(this.id)) {
       this.id = Math.floor(Math.random() * 1000);
     }
-    enemies.set(this.id, this);
+    this.enemyMap.set(this.id, this);
     console.log(`Enemy [${this.id}] Created`);
+  }
+
+  getIsInvincible() {
+    return this.isInvincible;
   }
 
   takeDamage(damage) {
@@ -142,7 +150,7 @@ class Enemy extends Character {
       console.log(`Enemy [${this.id}] has been killed!`);
       clearTimeout(this.fireTimeout);
       score.addPoints(this.pointsUponDeath);
-      enemies.delete(this.id);
+      gameManager.deleteEnemy(this.id);
       return;
     }
     
@@ -166,17 +174,19 @@ class Enemy extends Character {
 
 }
 
-class Alien01 extends Enemy {
+class AlienBasic extends Enemy {
 
-  constructor(xPos, yPos, width, height, health, speed, fireIntervalTime, direction, assetLocation) {
-    super(xPos, yPos, width, height, health, speed, fireIntervalTime, direction, assetLocation);
+  constructor(xPos, yPos, width, height, health, speed, projectileSpeed, fireIntervalTime, direction, assetLocation) {
+    super(xPos, yPos, width, height, health, speed, projectileSpeed, fireIntervalTime, direction, assetLocation);
     this.pointsUponDeath = 1;
     setTimeout(() => {
-      if (this.health > 0) this.fire();
+      this.fire();
+      this.isInvincible = false;
     }, 3000);
   }
 
   movement() {
+    if (this.direction == 0) return;
     if (this.xPos - this.width / 2 < 0 ) this.direction = 1;
     else if (this.xPos + this.width / 2 > width) this.direction = -1;
     if (this.direction > 0) this.xPos += this.speed;
@@ -185,14 +195,20 @@ class Alien01 extends Enemy {
   }
 
   fire() {
-    let projectile = new EnemyProjectile({
-      xPos : this.xPos,
-      yPos : this.yPos + 40,
-      width : 25,
-      height : 25,
-      damage : 1,
-      speed : 5,
-    });
+    if (gameManager.getCurrentEnemyMap().has(this.id)) {
+      let projectile = new EnemyProjectile({
+        xPos : this.xPos,
+        yPos : this.yPos + 40,
+        width : 25,
+        height : 25,
+        damage : 1,
+        speed : this.projectileSpeed,
+      });
+    } 
+    // else {
+    //   console.log(`Enemy [${this.id}] Not In Current Map`);
+    //   console.log(gameManager.getCurrentEnemyMap());
+    // }
     clearTimeout(this.fireTimeout);
     this.fireTimeout = setTimeout(() => {
       this.fire();

@@ -83,7 +83,9 @@ class PlayerProjectile extends Projectile {
   }
 
   checkCollision() {
-    enemies.forEach(enemy => {
+    gameManager.getCurrentEnemyMap().forEach(enemy => {
+      if (!(enemy instanceof Enemy)) return;
+      if (enemy.getIsInvincible()) return;
       if (dist(this.xPos, this.yPos, enemy.xPos, enemy.yPos) < this.width * 1.5) {
         console.log(`Player Projectile [${this.id}] Hit Enemy`);
         enemy.takeDamage(this.damage);
