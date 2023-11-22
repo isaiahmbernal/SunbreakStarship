@@ -3,11 +3,30 @@
   <head>
     <script src="./lib/p5.min.js"></script>
     <script src="./lib/addons/p5.sound.js"></script>
+
+    <!-- Root -->
     <script src="./sketch.js"></script>
-    <script src="./sound.js"></script>
-    <script src="./character.js"></script>
-    <script src="./hud.js"></script>
-    <script src="./projectile.js"></script>
+
+    <!-- Characters -->
+    <script src="./components/characters/character.js"></script>
+    <script src="./components/characters/player.js"></script>
+    <script src="./components/characters/enemy.js"></script>
+    <script src="./components/characters/alienBasic.js"></script>
+
+    <!-- Game Management -->
+    <script src="./components/game-management/level.js"></script>
+    <script src="./components/game-management/gameManager.js"></script>
+
+    <!-- HUD -->
+    <script src="./components/hud/healthBar.js"></script>
+    <script src="./components/hud/scoreText.js"></script>
+    <script src="./components/hud/gameOver.js"></script>
+
+    <!-- Projectiles -->
+    <script src="./components/projectiles/projectile.js"></script>
+    <script src="./components/projectiles/playerProjectile.js"></script>
+    <script src="./components/projectiles/enemyProjectile.js"></script>
+
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="utf-8" />
   </head>
