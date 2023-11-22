@@ -18,6 +18,8 @@ let alienBasicArt, alienBasicProjectileArt;
 
 // Audio
 let levelOneSong, levelTwoSong;
+let alienBasicDmgSFX, alienBasicDeathSFX;
+let playerDmgSFX;
 
 function preload() {
 
@@ -25,12 +27,16 @@ function preload() {
   playerArt = loadImage("assets/images/Starship_02_Test.png");
   heartArt = loadImage("assets/images/HUD_Heart.png");
   playerProjectileArt = loadImage("assets/images/Art_EnergyBall_Player.gif");
+  playerDmgSFX = loadSound("assets/audio/SFX_Player_Hit_01.wav");
 
   // Enemy
   alienBasicArt = loadImage("assets/images/Alien_01_Alive.gif");
   alienBasicProjectileArt = loadImage("assets/images/Art_EnergyBall_Enemy.gif");
+  alienBasicDmgSFX = loadSound("assets/audio/SFX_Enemy_Hit_03.wav");
+  alienBasicDeathSFX = loadSound("assets/audio/SFX_Enemy_Die_01.wav");
   
   // Music
+  gameOverMusic = loadSound("assets/audio/Music_FallenDown.mp3");
   levelOneSong = loadSound("assets/audio/Music_EnemyApproaching.mp3");
   levelTwoSong = loadSound("assets/audio/Music_StrongerMonsters.mp3");
   levelThreeSong = loadSound("assets/audio/Music_SpearOfJustice.mp3");
@@ -50,14 +56,15 @@ function setup() {
       health : 5,
       speed : 7.5,
       projectileSpeed : 10,
-      projectileDamage : 1,
+      projectileDamage : 10,
+      projectileScaleMult : 1,
       fireIntervalTime : 500,
     }, // Stats
     { // Assets
       charArt : playerArt,
       // fireSFX : "",
-      // dmgSFX : "",
-      // deathSFX : "",
+      dmgSFX : playerDmgSFX,
+      deathSFX : playerDmgSFX,
     },
   );
 
@@ -96,7 +103,8 @@ function draw() {
 }
 
 function keyPressed() {
-  if (!gameManager.getCurrLevel().music.isPlaying()) {
+  if (!gameManager.getCurrLevel().music.isPlaying()
+      && player.health > 0) {
     gameManager.getCurrLevel().playMusic();
   }
   player.abilities();

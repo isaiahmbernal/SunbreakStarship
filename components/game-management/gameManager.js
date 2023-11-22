@@ -18,13 +18,14 @@ class GameManager {
           speed : 5,
           projectileSpeed : 5,
           projectileDamage : 1,
-          fireIntervalTime : 300
+          projectileScaleMult : 1,
+          fireIntervalTime : 350
         }, 
         { // Assets
           charArt : alienBasicArt, 
           // fireSFX : "",
-          // dmgSFX: "",
-          // deathSFX : ""
+          dmgSFX: alienBasicDmgSFX,
+          deathSFX : alienBasicDeathSFX
         }, 
         1, // Direction
         1, // Points
@@ -43,13 +44,14 @@ class GameManager {
           speed : 5,
           projectileSpeed : 5,
           projectileDamage : 1,
-          fireIntervalTime : 300
+          projectileScaleMult : 1,
+          fireIntervalTime : 350
         }, 
         { // Assets
           charArt : alienBasicArt, 
           // fireSFX : "",
-          // dmgSFX: "",
-          // deathSFX : ""
+          dmgSFX: alienBasicDmgSFX,
+          deathSFX : alienBasicDeathSFX
         }, 
         1, // Direction
         1, // Points
@@ -65,13 +67,14 @@ class GameManager {
           speed : 5,
           projectileSpeed : 5,
           projectileDamage : 1,
-          fireIntervalTime : 300
+          projectileScaleMult : 1,
+          fireIntervalTime : 350
         }, 
         { // Assets
           charArt : alienBasicArt, 
           // fireSFX : "",
-          // dmgSFX: "",
-          // deathSFX : ""
+          dmgSFX: alienBasicDmgSFX,
+          deathSFX : alienBasicDeathSFX
         }, 
         -1, // Direction
         1, // Points
@@ -90,13 +93,14 @@ class GameManager {
           speed : 5,
           projectileSpeed : 5,
           projectileDamage : 1,
+          projectileScaleMult : 1,
           fireIntervalTime : 300
         }, 
         { // Assets
           charArt : alienBasicArt, 
           // fireSFX : "",
-          // dmgSFX: "",
-          // deathSFX : ""
+          dmgSFX: alienBasicDmgSFX,
+          deathSFX : alienBasicDeathSFX
         }, 
         1, // Direction
         1, // Points
@@ -112,13 +116,14 @@ class GameManager {
           speed : 5,
           projectileSpeed : 5,
           projectileDamage : 1,
+          projectileScaleMult : 1,
           fireIntervalTime : 300
         }, 
         { // Assets
           charArt : alienBasicArt, 
           // fireSFX : "",
-          // dmgSFX: "",
-          // deathSFX : ""
+          dmgSFX: alienBasicDmgSFX,
+          deathSFX : alienBasicDeathSFX
         }, 
         -1, // Direction
         1, // Points
@@ -134,17 +139,19 @@ class GameManager {
           speed : 5,
           projectileSpeed : 5,
           projectileDamage : 1,
-          fireIntervalTime : 600
+          projectileScaleMult : 4,
+          fireIntervalTime : 1500
         }, 
         { // Assets
           charArt : alienBasicArt, 
           // fireSFX : "",
-          // dmgSFX: "",
-          // deathSFX : ""
+          dmgSFX: alienBasicDmgSFX,
+          deathSFX : alienBasicDeathSFX
         }, 
         0, // Direction
         1, // Points
         levelThree, // Level
+        color(255, 50, 255), // Tint
       )
     );
 
