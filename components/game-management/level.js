@@ -14,8 +14,7 @@ class Level {
   playMusic() {
     console.log(`${this.name}: Play Music`);
     this.music.loop();
-    this.music.setVolume(1);
-    console.log(this.music.isPlaying());
+    // console.log(this.music.isPlaying());
   }
 
   stopMusic() {

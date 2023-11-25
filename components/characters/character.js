@@ -15,13 +15,14 @@ class Character {
     this.speed = stats.speed;
     this.projectileSpeed = stats.projectileSpeed;
     this.projectileDamage = stats.projectileDamage;
+    this.projectileScaleMult = stats.projectileScaleMult;
     this.fireIntervalTime = stats.fireIntervalTime;
 
     // Assets
     this.charArt = assets.charArt;
     // this.fireSFX = loadSound(assets.fireSFXLocation);
-    // this.dmgSFX = loadSound(assets.dmgSFXLocation);
-    // this.deathSFX = loadSound(assets.deathSFXLocation);
+    this.dmgSFX = assets.dmgSFX;
+    this.deathSFX = assets.deathSFX;
 
     // Misc
     this.isInvincible = false;
@@ -40,6 +41,7 @@ class Character {
 
   display() {
     imageMode(CENTER);
+    if (this.tint != null) tint(this.tint);
     if (this.tintOn) tint(255, 50, 50);
     image(this.charArt, this.xPos, this.yPos, this.width * this.tintSize, this.height * this.tintSize);
     tint("white");
@@ -59,7 +61,7 @@ class Character {
     if (this.isInvincible) return;
     if (this.health <= 0) return;
     this.health -= damage;
-    // this.dmgSFX.play();
+    this.dmgSFX.play();
     this.tintCycle();
     if (this instanceof Player) console.log(`Sunbreak Starship was hit for [${damage}] damage!\n[${this.health}] Health Left!`);
     else if (this instanceof Enemy) console.log(`Enemy [${this.id}] was hit for [${damage}] damage!`);

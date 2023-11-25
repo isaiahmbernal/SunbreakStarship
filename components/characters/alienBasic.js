@@ -1,7 +1,7 @@
 class AlienBasic extends Enemy {
 
-  constructor(position, scale, stats, assets, direction, points, level) {
-    super(position, scale, stats, assets, direction, points, level);
+  constructor(position, scale, stats, assets, direction, points, level, tint) {
+    super(position, scale, stats, assets, direction, points, level, tint);
     setTimeout(() => {this.fire();}, 3000);
     setTimeout(() => {this.isInvincible = false;}, 3000);
   }
@@ -31,7 +31,10 @@ class AlienBasic extends Enemy {
 
       new EnemyProjectile(
         {xPos : this.xPos, yPos : this.yPos + 40}, // Position
-        {width : 25, height : 25}, // Scale
+        { // Scale
+          width : 25 * this.projectileScaleMult,
+          height : 25 * this.projectileScaleMult,
+        }, 
         { // Stats
           damage : this.projectileDamage,
           speed : this.projectileSpeed

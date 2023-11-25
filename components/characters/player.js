@@ -37,7 +37,9 @@ class Player extends Character {
 
     new PlayerProjectile(
       {xPos : this.xPos, yPos : this.yPos}, // Position
-      {width : 50, height : 50}, // Scale
+      { // Scale
+        width : 50 * this.projectileScaleMult,
+        height : 50 * this.projectileScaleMult},
       { // Stats
         damage : this.projectileDamage,
         speed : this.projectileSpeed,
@@ -61,6 +63,8 @@ class Player extends Character {
       console.log("Sunbreak Starship has been destroyed!");
       this.xPos = -100;
       this.yPos = -100;
+      gameManager.getCurrLevel().stopMusic();
+      gameOverMusic.loop();
     }
   }
 
