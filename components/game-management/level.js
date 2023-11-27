@@ -1,14 +1,29 @@
 class Level {
 
-  constructor(gameManager, name, music) {
+  constructor(gameManager, name, music, loadTime, timeBeforeBattle) {
     this.gameManager = gameManager;
     this.name = name;
     this.music = music;
     this.enemyMap = new Map();
+    this.inBattle = false;
+    this.loadTime = loadTime;
+    this.timeBeforeBattle = timeBeforeBattle // ms
   }
 
   getName() {
     return this.name;
+  }
+
+  getLoadTime() {
+    return this.loadTime;
+  }
+
+  getInBattle() {
+    return this.inBattle;
+  }
+
+  getTimeBeforeBattle() {
+    return this.timeBeforeBattle;
   }
 
   playMusic() {
@@ -40,7 +55,15 @@ class Level {
     if (this.enemyMap.size == 0) this.levelComplete();
   }
 
+  engageBattle() {
+    this.inBattle = true;
+    this.enemyMap.forEach((enemy) => {enemy.setInBattle(true);});
+    this.playMusic();
+  }
+
   levelComplete() {
+    this.inBattle = false;
+    this.stopMusic();
     console.log(`${this.name}: All Enemies Defeated`);
     gameManager.loadNextLevel();
   }

@@ -27,10 +27,10 @@ class AlienBasic extends Enemy {
 
   fire() {
 
-    if (gameManager.getCurrLevel().getEnemyMap().has(this.id)) {
+    if (this.inBattle) {
 
       new EnemyProjectile(
-        {xPos : this.xPos, yPos : this.yPos + 40}, // Position
+        {xPos : this.xPos, yPos : this.loadYPos + 40}, // Position
         { // Scale
           width : 25 * this.projectileScaleMult,
           height : 25 * this.projectileScaleMult,

@@ -27,6 +27,10 @@ class Projectile {
     // console.log(`Projectile [${this.id}] Created {xPos: ${this.xPos}, yPos: ${this.yPos}}`);
 
   }
+  
+  getId() {
+    return this.id;
+  }
 
   boundaryCheck() {
 
