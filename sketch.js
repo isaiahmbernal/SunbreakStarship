@@ -1,5 +1,8 @@
 // Isaiah M. Bernal
 
+let startGame = false;
+let canInput = false;
+
 // Player
 let player;
 
@@ -7,7 +10,7 @@ let player;
 let gameManager;
 
 // HUD
-let healthBar, score, overlay;
+let healthBar, score, gameStart, gameOver, gameWin;
 
 // Projectiles
 let projectiles = new Map();
@@ -17,9 +20,11 @@ let playerArt, heartArt, playerProjectileArt;
 let alienBasicArt, alienBasicProjectileArt;
 
 // Audio
+let loadSong;
 let levelOneSong, levelTwoSong;
 let alienBasicDmgSFX, alienBasicDeathSFX;
 let playerDmgSFX;
+let spaceWooshSFX;
 
 function preload() {
 
@@ -36,10 +41,17 @@ function preload() {
   alienBasicDeathSFX = loadSound("assets/audio/SFX_Enemy_Die_01.wav");
   
   // Music
+  loadSong = loadSound("assets/audio/Music_Hotel_Revised.mp3");
   gameOverMusic = loadSound("assets/audio/Music_FallenDown.mp3");
   levelOneSong = loadSound("assets/audio/Music_EnemyApproaching.mp3");
   levelTwoSong = loadSound("assets/audio/Music_StrongerMonsters.mp3");
   levelThreeSong = loadSound("assets/audio/Music_SpearOfJustice.mp3");
+
+  // Misc SFX
+  spaceWooshSFX = loadSound("assets/audio/SFX_SpaceWoosh.mp3");
+
+  // Misc Art
+  spaceTravelGIF = loadImage("assets/images/SpaceTravel.gif");
 
 }
 
@@ -56,7 +68,7 @@ function setup() {
       health : 5,
       speed : 7.5,
       projectileSpeed : 10,
-      projectileDamage : 10,
+      projectileDamage : 1,
       projectileScaleMult : 1,
       fireIntervalTime : 500,
     }, // Stats
@@ -78,14 +90,24 @@ function setup() {
     player,
   );
 
-  gameOver = new GameOver();
-  gameManager = new GameManager();
+  gameStart = new GameStart("Press Any Key To Start");
+  gameOver = new GameOver("Game Over");
+  gameWin = new GameWin("You Win!");
+  gameManager = new GameManager(loadSong, spaceWooshSFX);
+
+  setTimeout(() => {canInput = true}, 5500);
 
 }
 
 function draw() {
 
   background('black');
+
+  if (gameManager.getLoadingLevel()) {
+    tint(255, 200);
+    image(spaceTravelGIF, width / 2, height / 2, width, height + 200);
+    tint(255);
+  }
 
   player.logic();
 
@@ -98,14 +120,23 @@ function draw() {
 
   healthBar.logic();
   scoreText.logic();
+  gameStart.logic();
   gameOver.logic();
+  gameWin.logic();
 
 }
 
 function keyPressed() {
-  if (!gameManager.getCurrLevel().music.isPlaying()
-      && player.health > 0) {
-    gameManager.getCurrLevel().playMusic();
+  if (!startGame) {
+    startGame = true;
+    gameManager.startGame();
   }
-  player.abilities();
+  if (canInput) {
+    console.log(`Loading Level: [${gameManager.getLoadingLevel()}], In Battle: [${gameManager.getCurrLevel().getInBattle()}]`)
+    if (gameManager.getLoadingLevel()
+    || !gameManager.getCurrLevel().getInBattle()) {
+      return;
+    } 
+    player.abilities();
+  }
 }
