@@ -19,12 +19,24 @@ class Player extends Character {
     this.healthHistory.push(newHealth);
   }
 
+  takeDamage(damage) {
+    if (this.isInvincible) return;
+    if (this.health <= 0) return;
+    this.setHealth(this.health - damage);
+    this.dmgSFX.play();
+    this.tintCycle();
+    console.log(`Sunbreak Starship was hit for [${damage}] damage!\n[${this.health}] Health Left!`);
+    this.deathCheck();
+  }
+
   setHealth(newHealth) {
     this.health = newHealth;
+    healthBar.updateHealthBar(this.health);
   }
 
   addHealth(addedHealth) {
     this.health += addedHealth;
+    healthBar.updateHealthBar(this.health);
   }
 
   getScore() {
