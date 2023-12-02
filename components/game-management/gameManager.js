@@ -15,7 +15,7 @@ class GameManager {
     this.currLevelIdx = -1;
 
     // Level One (4600, 4600)
-    this.levelOne = new Level(this, "Level One", levelOneSong, 1, 4600);
+    this.levelOne = new Level(this, "Level One", levelOneSong, 4600, 4600);
     this.levelOne.addEnemy(
       new AlienBasic(
         {xPos : width / 2, yPos : height / 5}, // Position
@@ -41,7 +41,7 @@ class GameManager {
     );
 
     // Level Two (7000, 4500)
-    this.levelTwo = new Level(this, "Level Two", levelTwoSong, 1, 4500);
+    this.levelTwo = new Level(this, "Level Two", levelTwoSong, 7000, 4500);
     this.levelTwo.addEnemy(
       new AlienBasic(
         {xPos : width / 2, yPos : height / 5}, // Position
@@ -90,7 +90,7 @@ class GameManager {
     );
 
     // Level Three (5000, 4000)
-    this.levelThree = new Level(this, "Level Three", levelThreeSong, 1, 4000);
+    this.levelThree = new Level(this, "Level Three", levelThreeSong, 5000, 4000);
     this.levelThree.addEnemy(
       new AlienBasic(
         {xPos : width / 2, yPos : height / 5}, // Position
@@ -163,7 +163,7 @@ class GameManager {
     );
 
     // Level Four (7000, 4500)
-    this.levelFour = new Level(this, "Level Four", levelFourSong, 1, 4500);
+    this.levelFour = new Level(this, "Level Four", levelFourSong, 7000, 4500);
     this.levelFour.addEnemy(
       new RobotBasic(
         {xPos : width / 2, yPos : height / 5}, // Position
@@ -179,8 +179,8 @@ class GameManager {
         { // Assets
           charArt : robotBasicGrayArt, 
           // fireSFX : "",
-          dmgSFX: alienBasicDmgSFX,
-          deathSFX : alienBasicDeathSFX
+          dmgSFX: robotBasicDmgSFX,
+          deathSFX : robotBasicDeathSFX
         },
         1, // Direction
         1, // Points
@@ -189,7 +189,7 @@ class GameManager {
     );
 
     // Level Five (7000, 4500)
-    this.levelFive = new Level(this, "Level Five", levelFiveSong, 1, 4500);
+    this.levelFive = new Level(this, "Level Five", levelFiveSong, 7000, 4500);
     this.levelFive.addEnemy(
       new RobotBasic(
         {xPos : width / 2, yPos : height / 5}, // Position
@@ -205,8 +205,8 @@ class GameManager {
         { // Assets
           charArt : robotBasicGrayArt, 
           // fireSFX : "",
-          dmgSFX: alienBasicDmgSFX,
-          deathSFX : alienBasicDeathSFX
+          dmgSFX: robotBasicDmgSFX,
+          deathSFX : robotBasicDeathSFX
         },
         1, // Direction
         1, // Points
@@ -228,8 +228,8 @@ class GameManager {
         { // Assets
           charArt : robotBasicGrayArt, 
           // fireSFX : "",
-          dmgSFX: alienBasicDmgSFX,
-          deathSFX : alienBasicDeathSFX
+          dmgSFX: robotBasicDmgSFX,
+          deathSFX : robotBasicDeathSFX
         },
         -1, // Direction
         1, // Points
@@ -238,7 +238,7 @@ class GameManager {
     );
 
     // Level Six (7000, 4500)
-    this.levelSix = new Level(this, "Level Six", levelSixSong, 1, 4500);
+    this.levelSix = new Level(this, "Level Six", levelSixSong, 7000, 4500);
     this.levelSix.addEnemy(
       new RobotBasic(
         {xPos : width / 2, yPos : height / 5}, // Position
@@ -254,8 +254,8 @@ class GameManager {
         { // Assets
           charArt : robotBasicGrayArt, 
           // fireSFX : "",
-          dmgSFX: alienBasicDmgSFX,
-          deathSFX : alienBasicDeathSFX
+          dmgSFX: robotBasicDmgSFX,
+          deathSFX : robotBasicDeathSFX
         },
         1, // Direction
         1, // Points
@@ -277,8 +277,8 @@ class GameManager {
         { // Assets
           charArt : robotBasicGrayArt, 
           // fireSFX : "",
-          dmgSFX: alienBasicDmgSFX,
-          deathSFX : alienBasicDeathSFX
+          dmgSFX: robotBasicDmgSFX,
+          deathSFX : robotBasicDeathSFX
         },
         -1, // Direction
         1, // Points
@@ -301,8 +301,8 @@ class GameManager {
         { // Assets
           charArt : robotBasicWhiteArt, 
           // fireSFX : "",
-          dmgSFX: alienBasicDmgSFX,
-          deathSFX : alienBasicDeathSFX
+          dmgSFX: robotBasicDmgSFX,
+          deathSFX : robotBasicDeathSFX
         },
         0, // Direction
         1, // Points

@@ -10,7 +10,7 @@ let player;
 let gameManager;
 
 // HUD
-let healthBar, score, gameStart, gameOver, gameWin;
+let healthBar, clock, score, gameStart, gameOver, gameWin;
 
 // Projectiles
 let projectiles = new Map();
@@ -31,18 +31,23 @@ function preload() {
 
   // Player
   playerArt = loadImage("assets/images/Sprite_Starship_24x24.gif");
-  heartArt = loadImage("assets/images/HUD_Heart.png");
+  heartArt = loadImage("assets/images/Sprite_Heart.png");
+  clockArt = loadImage("assets/images/Sprite_Clock.gif");
   playerProjectileArt = loadImage("assets/images/Sprite_PlasmaBall_01_32x32.gif");
   playerDmgSFX = loadSound("assets/audio/SFX_Player_Hit_01.wav");
 
-  // Enemy
+  // Alien
   alienBasicGreenArt = loadImage("assets/images/Sprite_Alien_Basic_Green.gif");
   alienBasicBlueArt = loadImage("assets/images/Sprite_Alien_Basic_Blue.gif");
   alienBasicProjectileArt = loadImage("assets/images/Sprite_PlasmaBall_02_32x32.gif");
   alienBasicDmgSFX = loadSound("assets/audio/SFX_Enemy_Hit_03.wav");
   alienBasicDeathSFX = loadSound("assets/audio/SFX_Enemy_Die_01.wav");
+
+  // Robot
   robotBasicGrayArt = loadImage("assets/images/Sprite_Robot_Basic_56x26.gif");
   robotBasicWhiteArt = loadImage("assets/images/Sprite_Robot_Basic_White_56x26.gif");
+  robotBasicDmgSFX = loadSound("assets/audio/SFX_Robot_Hit.wav");
+  robotBasicDeathSFX = loadSound("assets/audio/SFX_Robot_Die.wav");
   
   // Music
   loadSong = loadSound("assets/audio/Music_Hotel_Revised.mp3");
@@ -76,7 +81,7 @@ function setup() {
       health : 4,
       speed : 7.5,
       projectileSpeed : 15,
-      projectileDamage : 10,
+      projectileDamage : 1,
       projectileScaleMult : 1,
       fireIntervalTime : 500,
     }, // Stats
@@ -98,10 +103,20 @@ function setup() {
     player,
   );
 
-  gameStart = new GameStart("Press Any Key To Start");
+  gameStart = new GameStart(
+    "Sunbreak Starship\n\n\n\n" +
+    "WASD - Move\n\n" +
+    "Spacebar - Shoot\n\n" + 
+    "R - Rewind\n\n\n\n" + 
+    "Press Any Key To Start"
+  );
   gameOver = new GameOver("Game Over");
   gameWin = new GameWin("You Win!");
   gameManager = new GameManager(loadSong, spaceWooshSFX);
+  clock = new Clock(
+    {xPos : width - 65, yPos : height - 80}, // Position
+    gameManager
+  );
 
   setTimeout(() => {canInput = true}, 5500);
 
@@ -117,6 +132,7 @@ function draw() {
     tint(255);
   }
 
+  
   player.logic();
 
   // console.log(`Projectiles [${projectiles.size}]`);
@@ -124,9 +140,11 @@ function draw() {
     projectile.logic();
   })
 
+  
   gameManager.logic();
 
   healthBar.logic();
+  clock.logic();
   scoreText.logic();
   gameStart.logic();
   gameOver.logic();
