@@ -14,8 +14,8 @@ class GameManager {
     this.levelList = [];
     this.currLevelIdx = -1;
 
-    // Level One
-    this.levelOne = new Level(this, "Level One", levelOneSong, 4600, 4600);
+    // Level One (4600, 4600)
+    this.levelOne = new Level(this, "Level One", levelOneSong, 1, 4600);
     this.levelOne.addEnemy(
       new AlienBasic(
         {xPos : width / 2, yPos : height / 5}, // Position
@@ -29,7 +29,7 @@ class GameManager {
           fireIntervalTime : 350
         }, 
         { // Assets
-          charArt : alienBasicArt, 
+          charArt : alienBasicGreenArt, 
           // fireSFX : "",
           dmgSFX: alienBasicDmgSFX,
           deathSFX : alienBasicDeathSFX
@@ -40,8 +40,8 @@ class GameManager {
       )
     );
 
-    // Level Two
-    this.levelTwo = new Level(this, "Level Two", levelTwoSong, 7000, 4500);
+    // Level Two (7000, 4500)
+    this.levelTwo = new Level(this, "Level Two", levelTwoSong, 1, 4500);
     this.levelTwo.addEnemy(
       new AlienBasic(
         {xPos : width / 2, yPos : height / 5}, // Position
@@ -55,7 +55,7 @@ class GameManager {
           fireIntervalTime : 350
         }, 
         { // Assets
-          charArt : alienBasicArt, 
+          charArt : alienBasicGreenArt, 
           // fireSFX : "",
           dmgSFX: alienBasicDmgSFX,
           deathSFX : alienBasicDeathSFX
@@ -78,7 +78,7 @@ class GameManager {
           fireIntervalTime : 350
         }, 
         { // Assets
-          charArt : alienBasicArt, 
+          charArt : alienBasicGreenArt, 
           // fireSFX : "",
           dmgSFX: alienBasicDmgSFX,
           deathSFX : alienBasicDeathSFX
@@ -89,8 +89,8 @@ class GameManager {
       )
     );
 
-    // Level Three
-    this.levelThree = new Level(this, "Level Three", levelThreeSong, 5000, 4000);
+    // Level Three (5000, 4000)
+    this.levelThree = new Level(this, "Level Three", levelThreeSong, 1, 4000);
     this.levelThree.addEnemy(
       new AlienBasic(
         {xPos : width / 2, yPos : height / 5}, // Position
@@ -104,7 +104,7 @@ class GameManager {
           fireIntervalTime : 300
         }, 
         { // Assets
-          charArt : alienBasicArt, 
+          charArt : alienBasicGreenArt, 
           // fireSFX : "",
           dmgSFX: alienBasicDmgSFX,
           deathSFX : alienBasicDeathSFX
@@ -127,7 +127,7 @@ class GameManager {
           fireIntervalTime : 300
         }, 
         { // Assets
-          charArt : alienBasicArt, 
+          charArt : alienBasicGreenArt, 
           // fireSFX : "",
           dmgSFX: alienBasicDmgSFX,
           deathSFX : alienBasicDeathSFX
@@ -150,7 +150,7 @@ class GameManager {
           fireIntervalTime : 1500
         }, 
         { // Assets
-          charArt : alienBasicArt, 
+          charArt : alienBasicBlueArt, 
           // fireSFX : "",
           dmgSFX: alienBasicDmgSFX,
           deathSFX : alienBasicDeathSFX
@@ -158,14 +158,169 @@ class GameManager {
         0, // Direction
         1, // Points
         this.levelThree, // Level
-        color(255, 50, 255), // Tint
+        // color(255, 50, 255), // Tint
+      )
+    );
+
+    // Level Four (7000, 4500)
+    this.levelFour = new Level(this, "Level Four", levelFourSong, 1, 4500);
+    this.levelFour.addEnemy(
+      new RobotBasic(
+        {xPos : width / 2, yPos : height / 5}, // Position
+        {width : 560 / 3, height : 260 / 3}, // Scale
+        { // Stats
+          health : 10,
+          speed : 5,
+          projectileSpeed : 5,
+          projectileDamage : 1,
+          projectileScaleMult : 1,
+          fireIntervalTime : 400
+        },
+        { // Assets
+          charArt : robotBasicGrayArt, 
+          // fireSFX : "",
+          dmgSFX: alienBasicDmgSFX,
+          deathSFX : alienBasicDeathSFX
+        },
+        1, // Direction
+        1, // Points
+        this.levelFour, // Level
+      )
+    );
+
+    // Level Five (7000, 4500)
+    this.levelFive = new Level(this, "Level Five", levelFiveSong, 1, 4500);
+    this.levelFive.addEnemy(
+      new RobotBasic(
+        {xPos : width / 2, yPos : height / 5}, // Position
+        {width : 560 / 3, height : 260 / 3}, // Scale
+        { // Stats
+          health : 10,
+          speed : 5,
+          projectileSpeed : 5,
+          projectileDamage : 1,
+          projectileScaleMult : 1,
+          fireIntervalTime : 400
+        },
+        { // Assets
+          charArt : robotBasicGrayArt, 
+          // fireSFX : "",
+          dmgSFX: alienBasicDmgSFX,
+          deathSFX : alienBasicDeathSFX
+        },
+        1, // Direction
+        1, // Points
+        this.levelFive, // Level
+      )
+    );
+    this.levelFive.addEnemy(
+      new RobotBasic(
+        {xPos : width / 2, yPos : height / 5}, // Position
+        {width : 560 / 3, height : 260 / 3}, // Scale
+        { // Stats
+          health : 10,
+          speed : 5,
+          projectileSpeed : 5,
+          projectileDamage : 1,
+          projectileScaleMult : 1,
+          fireIntervalTime : 400
+        },
+        { // Assets
+          charArt : robotBasicGrayArt, 
+          // fireSFX : "",
+          dmgSFX: alienBasicDmgSFX,
+          deathSFX : alienBasicDeathSFX
+        },
+        -1, // Direction
+        1, // Points
+        this.levelFive, // Level
+      )
+    );
+
+    // Level Six (7000, 4500)
+    this.levelSix = new Level(this, "Level Six", levelSixSong, 1, 4500);
+    this.levelSix.addEnemy(
+      new RobotBasic(
+        {xPos : width / 2, yPos : height / 5}, // Position
+        {width : 560 / 3, height : 260 / 3}, // Scale
+        { // Stats
+          health : 10,
+          speed : 5,
+          projectileSpeed : 5,
+          projectileDamage : 1,
+          projectileScaleMult : 1,
+          fireIntervalTime : 400
+        },
+        { // Assets
+          charArt : robotBasicGrayArt, 
+          // fireSFX : "",
+          dmgSFX: alienBasicDmgSFX,
+          deathSFX : alienBasicDeathSFX
+        },
+        1, // Direction
+        1, // Points
+        this.levelSix, // Level
+      )
+    );
+    this.levelSix.addEnemy(
+      new RobotBasic(
+        {xPos : width / 2, yPos : height / 5}, // Position
+        {width : 560 / 3, height : 260 / 3}, // Scale
+        { // Stats
+          health : 10,
+          speed : 5,
+          projectileSpeed : 5,
+          projectileDamage : 1,
+          projectileScaleMult : 1,
+          fireIntervalTime : 400
+        },
+        { // Assets
+          charArt : robotBasicGrayArt, 
+          // fireSFX : "",
+          dmgSFX: alienBasicDmgSFX,
+          deathSFX : alienBasicDeathSFX
+        },
+        -1, // Direction
+        1, // Points
+        this.levelSix, // Level
+      )
+    );
+    this.levelSix.addEnemy(
+      new RobotBasic(
+        {xPos : width / 2, yPos : height / 13}, // Position
+        {width : 560 / 2, height : 260 / 2}, // Scale
+        { // Stats
+          health : 10,
+          speed : 5,
+          projectileSpeed : 5,
+          projectileDamage : 1,
+          projectileScaleMult : 3,
+          fireIntervalTime : 1500
+        }, 
+        
+        { // Assets
+          charArt : robotBasicWhiteArt, 
+          // fireSFX : "",
+          dmgSFX: alienBasicDmgSFX,
+          deathSFX : alienBasicDeathSFX
+        },
+        0, // Direction
+        1, // Points
+        this.levelSix, // Level
       )
     );
 
   }
 
   startGame() {
-    this.levelList.push(this.levelOne, this.levelTwo, this.levelThree);
+    this.levelList.push(
+      this.levelOne,
+      this.levelTwo,
+      this.levelThree,
+      this.levelFour,
+      this.levelFive,
+      this.levelSix,
+    );
     this.loadNextLevel();
   }
 
@@ -204,6 +359,8 @@ class GameManager {
       console.log(`All Levels Complete\nYou Win!`);
       return;
     }
+
+    player.addHealth(1);
     
     this.runLevelLogic = false;
     console.log(`Loading ${this.levelList[this.currLevelIdx].getName()}`);

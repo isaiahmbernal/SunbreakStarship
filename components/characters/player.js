@@ -4,6 +4,27 @@ class Player extends Character {
     super(position, scale, stats, assets);
     this.score = 0;
     this.fireTimeout;
+    this.speedMult = 1;
+
+    this.healthHistory = [5, 5, 5, 5, 5, 5, 5, 5, 5];
+  }
+
+  getHealthHistory() {
+    return this.healthHistory;
+  }
+
+  updateHealthHistory() {
+    let newHealth = this.health;
+    this.healthHistory.shift();
+    this.healthHistory.push(newHealth);
+  }
+
+  setHealth(newHealth) {
+    this.health = newHealth;
+  }
+
+  addHealth(addedHealth) {
+    this.health += addedHealth;
   }
 
   getScore() {
@@ -12,23 +33,29 @@ class Player extends Character {
 
   increaseScore(points) {
     this.score += points;
+    scoreText.updateScore(this.score);
+  }
+
+  setSpeedMult(newMult) {
+    this.speedMult = newMult;
   }
 
   movement() {
     // A
-    if (keyIsDown(65) && this.xPos > 80) this.xPos -= this.speed;
+    if (keyIsDown(65) && this.xPos > 80) this.xPos -= this.speed * this.speedMult;
     // D
-    if (keyIsDown(68) && this.xPos < width - 80) this.xPos += this.speed;
+    if (keyIsDown(68) && this.xPos < width - 80) this.xPos += this.speed * this.speedMult;
     // W
-    if (keyIsDown(87) && this.yPos > 220) this.yPos -= this.speed;
+    if (keyIsDown(87) && this.yPos > 220) this.yPos -= this.speed * this.speedMult;
     // S
-    if (keyIsDown(83) && this.yPos < height - 80) this.yPos += this.speed;
+    if (keyIsDown(83) && this.yPos < height - 80) this.yPos += this.speed * this.speedMult;
   }
 
   abilities() {
     if (this.health <= 0) return;
     // Spacebar
     if (keyCode == 32 && this.canFire) this.fire();
+    if (keyCode == 82 && gameManager.getCurrLevel().getCanRewind()) gameManager.getCurrLevel().rewind();
   }
 
   fire() {
@@ -38,11 +65,11 @@ class Player extends Character {
     new PlayerProjectile(
       {xPos : this.xPos, yPos : this.yPos}, // Position
       { // Scale
-        width : 50 * this.projectileScaleMult,
-        height : 50 * this.projectileScaleMult},
+        width : 25 * this.projectileScaleMult,
+        height : 25 * this.projectileScaleMult},
       { // Stats
         damage : this.projectileDamage,
-        speed : this.projectileSpeed,
+        ySpeed : this.projectileSpeed,
       }, 
       {art : playerProjectileArt}, // Assets
       player, // Player
@@ -65,6 +92,7 @@ class Player extends Character {
       this.yPos = -100;
       gameManager.getCurrLevel().stopMusic();
       gameOverMusic.loop();
+      canInput = false;
     }
   }
 
