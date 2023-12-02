@@ -5,22 +5,16 @@ class EnemyProjectile extends Projectile {
   }
 
   movement() {
-    this.yPos += this.speed;
+    this.yPos += this.ySpeed;
+    if (this.xSpeed != null) this.xPos += this.xSpeed;
   }
 
   checkCollision() {
-    if (dist(this.xPos, this.yPos, player.xPos, player.yPos) < this.width * 3/4) {
+    if (dist(this.xPos, this.yPos, player.getPosition().xPos, player.getPosition().yPos) < this.width * 3/4) {
       console.log(`Enemy Projectile [${this.id}] Hit Player`);
       player.takeDamage(this.damage);
       projectiles.delete(this.id);
     }
-  }
-
-  logic() {
-    this.movement();
-    this.checkCollision();
-    this.boundaryCheck();
-    this.display();
   }
 
 }

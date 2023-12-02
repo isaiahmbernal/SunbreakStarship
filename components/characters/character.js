@@ -39,6 +39,10 @@ class Character {
     return this.health;
   }
 
+  getPosition() {
+    return {xPos : this.xPos, yPos : this.yPos};
+  }
+
   display() {
     imageMode(CENTER);
     if (this.tint != null) tint(this.tint);

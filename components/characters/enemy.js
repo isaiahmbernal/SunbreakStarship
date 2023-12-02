@@ -17,12 +17,37 @@ class Enemy extends Character {
 
     this.inBattle = false;
 
-    // console.log(`${this.level.getName()}: Enemy [${this.id}] Created`)
+    // Position History
+    this.positionList = [
+      {xPos : this.xPos, yPos : this.yPos},
+      {xPos : this.xPos, yPos : this.yPos},
+      {xPos : this.xPos, yPos : this.yPos},
+      {xPos : this.xPos, yPos : this.yPos},
+      {xPos : this.xPos, yPos : this.yPos},
+      {xPos : this.xPos, yPos : this.yPos},
+      {xPos : this.xPos, yPos : this.yPos},
+      {xPos : this.xPos, yPos : this.yPos},
+      {xPos : this.xPos, yPos : this.yPos},
+    ];
 
   }
 
   setId(id) {
     this.id = id;
+  }
+
+  getPositionList() {
+    return this.positionList;
+  }
+
+  updatePositionList() {
+    let point = {xPos : this.xPos, yPos : this.loadYPos};
+    this.positionList.shift();
+    this.positionList.push(point);
+  }
+
+  setPosition(xPos, yPos) {
+    this.xPos = xPos, this.yPos = yPos;
   }
 
   getIsInvincible() {
@@ -61,7 +86,7 @@ class Enemy extends Character {
   logic() {
     if (this.health <= 0) return;
     if (this.loadYPos < this.yPos) this.load();
-    this.movement();
+    if (!gameManager.getCurrLevel().getIsRewinding()) this.movement();
     this.display();
   }
 

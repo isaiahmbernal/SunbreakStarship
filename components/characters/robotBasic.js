@@ -1,4 +1,4 @@
-class AlienBasic extends Enemy {
+class RobotBasic extends Enemy {
 
   constructor(position, scale, stats, assets, direction, points, level, tint) {
     super(position, scale, stats, assets, direction, points, level, tint);
@@ -31,14 +31,29 @@ class AlienBasic extends Enemy {
       !gameManager.getCurrLevel().getIsRewinding()) {
 
       new EnemyProjectile(
-        {xPos : this.xPos, yPos : this.loadYPos + 40}, // Position
+        {xPos : this.xPos - this.width / 3, yPos : this.loadYPos + 20}, // Position
         { // Scale
           width : 25 * this.projectileScaleMult,
           height : 25 * this.projectileScaleMult,
         }, 
         { // Stats
           damage : this.projectileDamage,
-          ySpeed : this.projectileSpeed
+          ySpeed : this.projectileSpeed,
+          xSpeed : 1,
+        }, 
+        {art : alienBasicProjectileArt}, // Assets
+      );
+
+      new EnemyProjectile(
+        {xPos : this.xPos + this.width / 3, yPos : this.loadYPos + 20}, // Position
+        { // Scale
+          width : 25 * this.projectileScaleMult,
+          height : 25 * this.projectileScaleMult,
+        }, 
+        { // Stats
+          damage : this.projectileDamage,
+          ySpeed : this.projectileSpeed,
+          xSpeed : -1,
         }, 
         {art : alienBasicProjectileArt}, // Assets
       );
