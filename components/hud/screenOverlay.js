@@ -4,7 +4,10 @@ class ScreenOverlay {
     this.overlayText = overlayText;
   }
 
+  // Cover the screen and
+  // display text in the center
   display() {
+
     rectMode(CENTER);
     fill(0, 0, 0, 150);
     rect(width / 2, height / 2, width, height);
@@ -13,6 +16,7 @@ class ScreenOverlay {
     textAlign(CENTER, CENTER);
     textSize(16);
     text(`${this.overlayText}`, width / 2, height / 2);
+    
   }
 
 }

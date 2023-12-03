@@ -1,9 +1,15 @@
 class AlienBasic extends Enemy {
 
   constructor(position, scale, stats, assets, direction, points, level, tint) {
+
     super(position, scale, stats, assets, direction, points, level, tint);
+
+    // Start shooting loop 3 seconds
+    // after initialization
     setTimeout(() => {this.fire();}, 3000);
+
     // setTimeout(() => {this.isInvincible = false;}, 3000);
+
   }
 
   movement() {
@@ -25,13 +31,17 @@ class AlienBasic extends Enemy {
 
   }
 
+  // Shooting method
   fire() {
 
+    // If we're in battle and
+    // the level isn't rewinding
     if (this.inBattle && 
       !gameManager.getCurrLevel().getIsRewinding()) {
 
+      // Create an enemy projectile
       new EnemyProjectile(
-        {xPos : this.xPos, yPos : this.loadYPos + 40}, // Position
+        {xPos : this.xPos, yPos : this.trueYPos + 40}, // Position
         { // Scale
           width : 25 * this.projectileScaleMult,
           height : 25 * this.projectileScaleMult,
@@ -46,12 +56,9 @@ class AlienBasic extends Enemy {
       // this.fireSFX.play();
 
     }
-    
-    // else {
-    //   console.log(`Enemy [${this.id}] Not In Current Map`);
-    //   console.log(gameManager.getCurrentEnemyMap());
-    // }
 
+    // Timeout after which the fire
+    // method will be called again
     clearTimeout(this.fireTimeout);
     this.fireTimeout = setTimeout(() => {
       this.fire();
