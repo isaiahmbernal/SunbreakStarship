@@ -2,16 +2,24 @@ class GameManager {
 
   constructor(levelLoadSong, levelLoadSound) {
 
+    // Sound
     this.levelLoadSong = levelLoadSong;
     this.levelLoadSound = levelLoadSound;
 
+    // Timeout for loading levels
     this.levelLoadTimeout;
 
-    this.loadingLevel = false; // Used to render lines
+    // Check if we're loading a level
+    this.loadingLevel = false; 
 
+    // If we should be running
+    // the current level logic
     this.runLevelLogic = false;
 
+    // List of levels
     this.levelList = [];
+
+    // The index of our current level
     this.currLevelIdx = -1;
 
     // Level One (4600, 4600)
@@ -312,7 +320,10 @@ class GameManager {
 
   }
 
+  // Method run when game starts
   startGame() {
+
+    // Add all levels to the level list
     this.levelList.push(
       this.levelOne,
       this.levelTwo,
@@ -321,7 +332,10 @@ class GameManager {
       this.levelFive,
       this.levelSix,
     );
+
+    // Load the next level (Level One)
     this.loadNextLevel();
+
   }
 
   getLevelList() {
@@ -340,44 +354,68 @@ class GameManager {
     return this.loadingLevel;
   }
 
+  // Load the next level 
+  // in the level list
   loadNextLevel() {
 
+    // Loading level is true
     this.loadingLevel = true;
 
+    // Increase our current level index
     this.currLevelIdx += 1;
 
+    // Play the corresponding sounds
     this.levelLoadSound.play();
     this.levelLoadSong.play();
 
+    // Delete every projectile
     projectiles.forEach((projectile) => {
       if (projectile instanceof EnemyProjectile) {
         projectiles.delete(projectile.getId());
       }
     });
 
+    // If we've exceeded the
+    // level list, we win
     if (this.currLevelIdx >= this.levelList.length) {
       console.log(`All Levels Complete\nYou Win!`);
       return;
     }
 
+    // Throw the player a bone
     player.addHealth(1);
     
+    // Stop running level logic
     this.runLevelLogic = false;
+
     console.log(`Loading ${this.levelList[this.currLevelIdx].getName()}`);
     
+    // Timeout for loading the next level
     clearTimeout(this.levelLoadTimeout);
     this.levelLoadTimeout = setTimeout(() => {
+
+      // Set the current level
+      // to the next in the list
       this.currLevel = this.levelList[this.currLevelIdx];
+
+      // Start running the level logic
       this.runLevelLogic = true;
+
+      // Stop loading level
       this.loadingLevel = false;
+
       console.log(`Loaded ${this.levelList[this.currLevelIdx].getName()}`);
+
+      // Timeout for when battle should start
       setTimeout(() => {
         this.levelLoadSong.pause();
         this.currLevel.engageBattle()
       }, this.currLevel.getTimeBeforeBattle());
+
     }, this.levelList[this.currLevelIdx].getLoadTime());
   }
 
+  // Logic to be run every frame in sketch.js
   logic() {
     if (this.runLevelLogic) this.currLevel.logic();
   }

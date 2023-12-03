@@ -1,9 +1,15 @@
 class RobotBasic extends Enemy {
 
   constructor(position, scale, stats, assets, direction, points, level, tint) {
+
     super(position, scale, stats, assets, direction, points, level, tint);
+
+    // Start shooting loop 3 seconds
+    // after initialization
     setTimeout(() => {this.fire();}, 3000);
+
     // setTimeout(() => {this.isInvincible = false;}, 3000);
+
   }
 
   movement() {
@@ -25,13 +31,17 @@ class RobotBasic extends Enemy {
 
   }
 
+  // Shooting method
   fire() {
 
+    // If we're in battle and
+    // the level isn't rewinding
     if (this.inBattle && 
       !gameManager.getCurrLevel().getIsRewinding()) {
 
+      // Create an enemy projectile
       new EnemyProjectile(
-        {xPos : this.xPos - this.width / 3, yPos : this.loadYPos + 20}, // Position
+        {xPos : this.xPos - this.width / 3, yPos : this.trueYPos + 20}, // Position
         { // Scale
           width : 25 * this.projectileScaleMult,
           height : 25 * this.projectileScaleMult,
@@ -44,8 +54,9 @@ class RobotBasic extends Enemy {
         {art : alienBasicProjectileArt}, // Assets
       );
 
+      // Create another enemy projectile
       new EnemyProjectile(
-        {xPos : this.xPos + this.width / 3, yPos : this.loadYPos + 20}, // Position
+        {xPos : this.xPos + this.width / 3, yPos : this.trueYPos + 20}, // Position
         { // Scale
           width : 25 * this.projectileScaleMult,
           height : 25 * this.projectileScaleMult,
@@ -61,12 +72,9 @@ class RobotBasic extends Enemy {
       // this.fireSFX.play();
 
     }
-    
-    // else {
-    //   console.log(`Enemy [${this.id}] Not In Current Map`);
-    //   console.log(gameManager.getCurrentEnemyMap());
-    // }
 
+    // Timeout after which this
+    // fire method will be run again
     clearTimeout(this.fireTimeout);
     this.fireTimeout = setTimeout(() => {
       this.fire();

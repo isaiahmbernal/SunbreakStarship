@@ -1,30 +1,50 @@
 class HealthBar {
 
   constructor(position, player) {
+
+    // Position
     this.xPos = position.xPos;
     this.yPos = position.yPos;
+
+    // Tracked Player
     this.player = player;
     this.health = player.getHealth();
 
-    this.damageTimeout;
-    this.damageTime = 100; // ms
-    this.damaged = false;
+    // Visual Update Effects
+    this.updateTimeout;
+    this.updateTime = 100; // ms
+    this.updated = false;
+
   }
 
-  updateHealthBar(newHealth) {
+  // Update the health
+  updateHealth(newHealth) {
+
+    // Set the new health
     this.health = newHealth;
-    this.damaged = true;
-    clearTimeout(this.damageTimeout);
-    this.damageTimeout = setTimeout(() => {
-      this.damaged = false;
-    }, this.damageTime);
+
+    // Set updated to true
+    this.updated = true;
+
+    // Reset the visual update 
+    // effects after the timeout
+    clearTimeout(this.updateTimeout);
+    this.updateTimeout = setTimeout(() => {
+      this.updated = false;
+    }, this.updateTime);
+
   }
 
   display() {
+
     imageMode(CENTER);
+
+    // Display every heart in a row
     let currPos = 0
     for (let i = 0; i < this.health; i++) {
-      if (i == this.health - 1 && this.damaged == true) {
+      // If the health is being updated, visually
+      // pop up the last health in the row
+      if (i == this.health - 1 && this.updated == true) {
         image(heartArt, this.xPos + currPos, this.yPos - 10, 25, 25);  
       } else {
         image(heartArt, this.xPos + currPos, this.yPos, 25, 25);
@@ -33,6 +53,7 @@ class HealthBar {
     }
   }
 
+  // Logic to be run every frame in sketch.js
   logic() {
     this.display();
   }

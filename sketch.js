@@ -1,5 +1,7 @@
 // Isaiah M. Bernal
 
+// Prevent the player from pressing
+// buttons when they shouldn't
 let startGame = false;
 let canInput = false;
 
@@ -74,6 +76,7 @@ function setup() {
   background('black');
   frameRate(30);
 
+  // Create the player object
   player = new Player(
     {xPos : width / 2, yPos : height - 100}, // Position
     {width : 300 / 5, height : 290 / 5}, // Scale
@@ -93,16 +96,19 @@ function setup() {
     },
   );
 
+  // Create the healthbar HUD object
   healthBar = new HealthBar(
     {xPos : 25, yPos : height - 25}, // Position
     player, // Player
   );
-
+  
+  // Create the score HUD object
   scoreText = new ScoreText(
     {xPos : width - 70, yPos : height - 30},
     player,
   );
 
+  // Create the start game overlay
   gameStart = new GameStart(
     "Sunbreak Starship\n\n\n\n" +
     "WASD - Move\n\n" +
@@ -110,14 +116,24 @@ function setup() {
     "R - Rewind\n\n\n\n" + 
     "Press Any Key To Start"
   );
+
+  // Create the game over overlay
   gameOver = new GameOver("Game Over");
+
+  // Create the game win overlay
   gameWin = new GameWin("You Win!");
+
+  // Create the game manager
   gameManager = new GameManager(loadSong, spaceWooshSFX);
+
+  // Create the clock HUD object
   clock = new Clock(
     {xPos : width - 65, yPos : height - 80}, // Position
     gameManager
   );
 
+  // The player can start pressing
+  // ability buttons after this timeout
   setTimeout(() => {canInput = true}, 5500);
 
 }
@@ -126,23 +142,26 @@ function draw() {
 
   background('black');
 
+  // If the gamemanager is loading the next
+  // level, display the space travel gif
   if (gameManager.getLoadingLevel()) {
     tint(255, 200);
     image(spaceTravelGIF, width / 2, height / 2, width, height + 200);
     tint(255);
   }
 
-  
+  // Run the player logic every frame
   player.logic();
 
-  // console.log(`Projectiles [${projectiles.size}]`);
+  // Run the projectile logic every frame
   projectiles.forEach(projectile => {
     projectile.logic();
   })
 
-  
+  // Run the game manager logic every frame
   gameManager.logic();
 
+  // Run all of the HUD logic every frame
   healthBar.logic();
   clock.logic();
   scoreText.logic();
@@ -153,12 +172,19 @@ function draw() {
 }
 
 function keyPressed() {
+
+  // If we haven't pressed any
+  // buttons yet, start the game
   if (!startGame) {
     startGame = true;
     gameManager.startGame();
   }
+
+  // If we're allowed to input and the game
+  // manager is NOT loading a level and IS
+  // currently in battle, allow the player
+  // to use abilities
   if (canInput) {
-    // console.log(`Loading Level: [${gameManager.getLoadingLevel()}], In Battle: [${gameManager.getCurrLevel().getInBattle()}]`)
     if (gameManager.getLoadingLevel()
     || !gameManager.getCurrLevel().getInBattle()) {
       return;
